@@ -117,7 +117,7 @@ class CollabConsumer(AsyncWebsocketConsumer):
         if self.user is None or not self.user.is_authenticated:
             await self.refuse(4401, "not_authenticated")
             return
-        if not allow_connection_attempt(self.user.pk):
+        if not await db(allow_connection_attempt)(self.user.pk):
             await self.refuse(4429, "rate_limited")
             return
         self.bucket = TokenBucket.from_settings()
