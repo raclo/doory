@@ -480,7 +480,7 @@ class Room:
                     outcome.detail,
                 )
                 if outcome.reason == "update_too_costly":
-                    block_user(member.user_id)
+                    await db(block_user)(member.user_id)
                 self.kick(member, 4413 if outcome.reason == "document_too_large" else 4400, outcome.reason)
             elif outcome.kind == "applied":
                 applied.append((member, data))
